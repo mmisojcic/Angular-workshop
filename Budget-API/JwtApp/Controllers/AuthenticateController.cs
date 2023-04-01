@@ -92,10 +92,6 @@ namespace BudgetApi.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
-        [Route("changePassword")]
-        [Authorize]
-
 
         [HttpPost]
         [Route("checkPassword/{password}")]

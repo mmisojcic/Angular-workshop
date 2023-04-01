@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+
 import { ICredentials } from 'src/core/models';
+import { AuthenticationService } from 'src/core/services/authentication.service';
 
 @Component({
   selector: 'budget-login',
@@ -9,7 +11,9 @@ import { ICredentials } from 'src/core/models';
 export class LoginComponent {
   submitLabel: string = 'Login';
 
+  constructor(private authenticationService: AuthenticationService) {}
+
   onEmitCredentials(credentials: ICredentials) {
-    console.log(credentials);
+    this.authenticationService.login(credentials);
   }
 }

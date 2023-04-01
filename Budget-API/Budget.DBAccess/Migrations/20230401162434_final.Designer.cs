@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Budget.DBAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230328164454_categoryChange")]
-    partial class categoryChange
+    [Migration("20230401162434_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

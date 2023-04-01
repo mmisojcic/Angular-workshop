@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+  <mat-icon fontIcon="monetization_on"></mat-icon>
+  <span>Budget</span>
+  <span class="example-spacer"></span>
+  <span>{{ username }}</span>
+  <button
+    mat-icon-button
+    aria-label="user menu trigger"
+    [matMenuTriggerFor]="userMenu"
+  >
+    <mat-icon fontIcon="person"> </mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon fontIcon="logout"></mat-icon>Logout
+    </button>
+    <button mat-menu-item>
+      <mat-icon fontIcon="settings"></mat-icon>Settings
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a
+    mat-tab-link
+    [active]="activeLink === links.Categories"
+    (click)="onTabChange(links.Categories)"
+    ><mat-icon fontIcon="my_library_books"></mat-icon>
+    Categories
+  </a>
+  <a
+    mat-tab-link
+    [active]="activeLink === links.Transactions"
+    (click)="onTabChange(links.Transactions)"
+    ><mat-icon fontIcon="import_export"></mat-icon>
+    Transactions
+  </a>
+</nav>
+<mat-divider></mat-divider>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>
