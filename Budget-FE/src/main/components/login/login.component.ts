@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ICredentials } from 'src/core/models';
 
 @Component({
   selector: 'budget-login',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
   submitLabel: string = 'Login';
+
+  onEmitCredentials(credentials: ICredentials) {
+    console.log(credentials);
+  }
 }

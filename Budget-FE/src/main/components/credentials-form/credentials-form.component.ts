@@ -1,15 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
-  UntypedFormGroup,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { ICredentials } from 'src/core/models';
 
-import { ICredentialsFrom } from 'src/main/models/indexl';
+import { ICredentials } from 'src/core/models';
+import { ICredentialsFrom } from 'src/main/models';
 
 @Component({
   selector: 'budget-credentials-form',
@@ -18,30 +16,30 @@ import { ICredentialsFrom } from 'src/main/models/indexl';
 })
 export class CredentialsFormComponent implements OnInit {
   @Input() submitLabel: string = '';
+  @Output() emitCredentials: EventEmitter<ICredentials> = new EventEmitter();
+
   credentialsForm!: FormGroup<ICredentialsFrom>;
+  passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.credentialsForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/
-          ),
-        ],
-      ],
+      password: ['', this.setPasswordValidators()],
     });
   }
 
-  onSubmit(): void {
-    if (this.credentialsForm.invalid) {
-      return;
-    }
+  setPasswordValidators(): ValidatorFn[] {
+    return this.submitLabel === 'Register'
+      ? [Validators.required, Validators.pattern(this.passwordPattern)]
+      : [Validators.required];
+  }
 
-    console.log(this.credentialsForm.controls);
+  onSubmit(): void {
+    if (this.credentialsForm.valid) {
+      this.emitCredentials.emit(this.credentialsForm.value as ICredentials);
+    }
   }
 }

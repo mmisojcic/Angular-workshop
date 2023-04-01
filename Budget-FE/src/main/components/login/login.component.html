@@ -1,5 +1,6 @@
 <div class="w-100 h-100 d-flex justify-content-center align-items-center">
   <budget-credentials-form
     [submitLabel]="submitLabel"
+    (emitCredentials)="onEmitCredentials($event)"
   ></budget-credentials-form>
 </div>
