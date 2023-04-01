@@ -38,12 +38,11 @@ export class JwtTokenService {
   getExpiryTime(): number | null {
     const decodedToken = this.getDecodedToken();
 
-    return decodedToken ? decodedToken.exp : null;
+    return decodedToken ? decodedToken.exp * 1000 : null;
   }
 
-  isTokenExpired(): boolean {
+  tokenExpired(): boolean {
     const expiryTime: number | null = this.getExpiryTime();
-
-    return expiryTime ? 1000 * expiryTime - new Date().getDate() < 2000 : true;
+    return expiryTime ? new Date().getTime() > expiryTime : true;
   }
 }

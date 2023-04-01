@@ -5,9 +5,14 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { authGuard } from 'src/core/guards/auth-guard.service';
+import { authGuard } from 'src/core/guards/auth.guard';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     component: LoginComponent,

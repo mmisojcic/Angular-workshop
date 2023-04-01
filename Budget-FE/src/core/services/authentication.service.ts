@@ -23,7 +23,11 @@ export class AuthenticationService {
   register(credentials: ICredentials) {
     this.http
       .post(`${environment.serverUrl}/${this.endpoint}/register`, credentials)
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.router.navigate([`login`]);
+        },
+      });
   }
 
   login(credentials: ICredentials) {
