@@ -8,6 +8,13 @@ import { ICategory, TransactionType } from '../../models';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent {
-  @Input() category!: ICategory;
-  transactionType = TransactionType;
+  @Input() set category(category: ICategory) {
+    this.fontIcon =
+      category.type === TransactionType.Expense
+        ? 'arrow_upward'
+        : 'arrow_downward';
+    this._category = category;
+  }
+  _category!: ICategory;
+  fontIcon: string = '';
 }
