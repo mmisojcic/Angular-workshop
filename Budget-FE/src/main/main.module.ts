@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CoreModule } from '../core/core.module';
 import { MainRoutingModule } from './main-routing.module';
@@ -13,6 +13,9 @@ import { LoginComponent } from './components/login/login.component';
 import { CredentialsFormComponent } from './components/credentials-form/credentials-form.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { AuthorizationInterceptor } from 'src/core/interceptors/authorization.interceptor';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     CredentialsFormComponent,
     HomeComponent,
     NotFoundComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     MainRoutingModule,
     AngularMaterialModule,
     ReactiveFormsModule,
+    InputMaskModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [MainComponent],
 })

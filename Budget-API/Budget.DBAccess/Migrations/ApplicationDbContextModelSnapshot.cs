@@ -57,8 +57,8 @@ namespace Budget.DBAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<long>("BudgetAmount")
-                        .HasColumnType("bigint");
+                    b.Property<double>("BudgetAmount")
+                        .HasColumnType("float");
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
@@ -81,8 +81,8 @@ namespace Budget.DBAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<long>("Amount")
-                        .HasColumnType("bigint");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");

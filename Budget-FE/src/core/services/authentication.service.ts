@@ -5,14 +5,12 @@ import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ICredentials, ILoginPayload } from '../models';
 import { JwtTokenService } from './jwt-token.service';
-import { TransactionsRoute } from 'src/shared/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   endpoint: string = 'api/Authenticate';
-  username: string | undefined = '';
 
   constructor(
     private http: HttpClient,
@@ -39,7 +37,6 @@ export class AuthenticationService {
       .subscribe({
         next: (res) => {
           this.jwtTokenService.setToken(res.token);
-          this.username = this.jwtTokenService.getUsername(res.token);
           this.router.navigate([`home`]);
         },
         error: (error) => console.log(error),

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Budget.DBAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230401162434_final")]
-    partial class final
+    [Migration("20230402121411_decimalBudget")]
+    partial class decimalBudget
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,8 +59,8 @@ namespace Budget.DBAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<long>("BudgetAmount")
-                        .HasColumnType("bigint");
+                    b.Property<double>("BudgetAmount")
+                        .HasColumnType("float");
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
@@ -83,8 +83,8 @@ namespace Budget.DBAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<long>("Amount")
-                        .HasColumnType("bigint");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");

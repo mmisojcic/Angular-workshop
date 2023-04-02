@@ -18,7 +18,7 @@ namespace Budget.Models.Entities
         [JsonIgnore]
         public virtual Category Category { get; set; }
         public DateTime Date { get; set; }
-        public long Amount { get; set; }
+        public double Amount { get; set; }
         public string Note { get; set; } 
         [JsonIgnore]
         public virtual ApplicationUser User { get; set; }

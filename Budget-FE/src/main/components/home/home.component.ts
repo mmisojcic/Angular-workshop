@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 import { AuthenticationService } from 'src/core/services/authentication.service';
 import { TransactionsRoute } from 'src/shared/models';
+import { SettingsComponent } from '../settings/settings.component';
+import { JwtTokenService } from 'src/core/services/jwt-token.service';
+import { SettingsService } from 'src/main/services/settings.service';
 
 @Component({
   selector: 'budget-home',
@@ -12,16 +16,21 @@ import { TransactionsRoute } from 'src/shared/models';
 export class HomeComponent implements OnInit {
   username: string | undefined = '';
   links = TransactionsRoute;
-  activeLink: string = TransactionsRoute.Transactions;
+  activeLink: string | undefined = '';
 
   constructor(
     private authenticationService: AuthenticationService,
+    private settingsService: SettingsService,
+    private jwtTokenService: JwtTokenService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.username = this.authenticationService.username;
+    this.username = this.jwtTokenService.getUsername();
+    this.settingsService.get();
+    this.activeLink = this.activatedRoute.firstChild?.routeConfig?.path;
   }
 
   onLogout() {
@@ -31,5 +40,13 @@ export class HomeComponent implements OnInit {
   onTabChange(link: TransactionsRoute) {
     this.activeLink = link;
     this.router.navigate([link], { relativeTo: this.activatedRoute });
+  }
+
+  onOpenDialog() {
+    const dialogRef = this.dialog.open(SettingsComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

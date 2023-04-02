@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Budget.DBAccess.Migrations
 {
-    public partial class final : Migration
+    public partial class decimalBudget : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -181,7 +181,7 @@ namespace Budget.DBAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BudgetAmount = table.Column<long>(type: "bigint", nullable: false),
+                    BudgetAmount = table.Column<double>(type: "float", nullable: false),
                     Day = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -204,7 +204,7 @@ namespace Budget.DBAccess.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<long>(type: "bigint", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

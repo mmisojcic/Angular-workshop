@@ -13,7 +13,7 @@ namespace Budget.Models.Entities
     {
         [Key]
         public int Id { get; set; } 
-        public long BudgetAmount { get; set; } 
+        public double BudgetAmount { get; set; } 
         public int Day { get; set; } 
         [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
