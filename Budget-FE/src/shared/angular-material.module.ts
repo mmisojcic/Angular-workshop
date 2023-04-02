@@ -10,6 +10,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatSelectModule } from '@angular/material/select';
 
 const materialComponents = [
   MatButtonModule,
@@ -23,6 +25,8 @@ const materialComponents = [
   MatTabsModule,
   MatDividerModule,
   MatDialogModule,
+  MatBottomSheetModule,
+  MatSelectModule,
 ];
 
 @NgModule({

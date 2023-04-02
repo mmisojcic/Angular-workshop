@@ -7,6 +7,7 @@ import { TransactionsRoute } from 'src/shared/models';
 import { SettingsComponent } from '../settings/settings.component';
 import { JwtTokenService } from 'src/core/services/jwt-token.service';
 import { SettingsService } from 'src/main/services/settings.service';
+import { CategoriesService } from 'src/features/transactions/services/categories.service';
 
 @Component({
   selector: 'budget-home',
@@ -24,13 +25,15 @@ export class HomeComponent implements OnInit {
     private jwtTokenService: JwtTokenService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private categoriesService: CategoriesService
   ) {}
 
   ngOnInit(): void {
     this.username = this.jwtTokenService.getUsername();
     this.settingsService.get();
     this.activeLink = this.activatedRoute.firstChild?.routeConfig?.path;
+    this.categoriesService.getAll();
   }
 
   onLogout() {
@@ -43,10 +46,6 @@ export class HomeComponent implements OnInit {
   }
 
   onOpenDialog() {
-    const dialogRef = this.dialog.open(SettingsComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+    this.dialog.open(SettingsComponent);
   }
 }

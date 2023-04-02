@@ -1,0 +1,16 @@
+<div class="category">
+  <div
+    class="category__type"
+    [ngStyle]="{ 'background-color': category.color }"
+  >
+    <mat-icon
+      color="white"
+      [fontIcon]="
+        category.type === transactionType.Expense
+          ? 'arrow_upward'
+          : 'arrow_downward'
+      "
+    ></mat-icon>
+  </div>
+  <span>{{ category.name }}</span>
+</div>
