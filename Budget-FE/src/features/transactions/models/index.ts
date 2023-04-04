@@ -6,6 +6,11 @@ export enum TransactionType {
   Expense = 'Expense',
 }
 
+export enum TransactionTypeIcon {
+  Income = 'arrow_downward',
+  Expense = 'arrow_upward',
+}
+
 export interface TransactionTypeSelect {
   value: string;
   label: string;
@@ -35,7 +40,7 @@ export interface ITransactionForm {
 export interface ITransaction {
   id?: number;
   type?: TransactionType;
-  category?: Partial<ICategory>;
+  category?: ICategory;
   categoryId: number;
   date: string;
   amount: number;

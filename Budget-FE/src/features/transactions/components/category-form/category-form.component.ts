@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 import { Color } from '@angular-material-components/color-picker';
 
 import {
+  ICategory,
   ICategoryFrom,
   TransactionType,
   TransactionTypeSelect,
@@ -22,6 +26,7 @@ export class CategoryFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public categoryForUpdate: ICategory,
     private bottomSheetRef: MatBottomSheetRef<CategoriesComponent>,
     private categoriesService: CategoriesService
   ) {}
@@ -32,6 +37,20 @@ export class CategoryFormComponent implements OnInit {
       color: [new Color(63, 81, 181), Validators.required],
       name: ['', Validators.required],
     });
+
+    if (this.categoryForUpdate) {
+      const rgba = this.categoryForUpdate.color.match(
+        /rgba\((\d+),(\d+),(\d+),(\d+)\)/
+      );
+
+      console.log(rgba);
+
+      // this.categoryForm.setValue({
+      //   type: this.categoryForUpdate.type as string,
+      //   color: new Color(rgba[1], rgba[2], rgba[3], rgba[4]),
+      //   name: this.categoryForUpdate.name,
+      // });
+    }
 
     this.transactionTypes = Object.values(TransactionType).map((type) => ({
       value: type,

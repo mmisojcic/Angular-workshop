@@ -9,7 +9,16 @@
       <mat-select formControlName="categoryId">
         <mat-option *ngFor="let category of categories" [value]="category.id">
           <div class="item">
-            <budget-category [category]="category"></budget-category>
+            <div
+              class="item__type"
+              [ngStyle]="{ 'background-color': category?.color }"
+            >
+              <mat-icon
+                [fontIcon]="transactionTypeIcon[category.type]"
+                class="item__type__icon"
+              ></mat-icon>
+            </div>
+            <span>{{ category?.name }}</span>
           </div>
         </mat-option>
       </mat-select>

@@ -4,7 +4,7 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Subscription } from 'rxjs';
 import { createMask } from '@ngneat/input-mask';
 
-import { ICategory, ITransactionForm } from '../../models';
+import { ICategory, ITransactionForm, TransactionTypeIcon } from '../../models';
 import { TransactionsComponent } from '../transactions/transactions.component';
 import { TransactionsService } from '../../services/transactions.service';
 import { CategoriesService } from '../../services/categories.service';
@@ -17,6 +17,7 @@ import { transformDateToDataBaseDateFormat } from 'src/shared/utils';
   styleUrls: ['./transaction-form.component.scss'],
 })
 export class TransactionFormComponent implements OnInit, OnDestroy {
+  transactionTypeIcon = TransactionTypeIcon;
   transactionForm!: FormGroup<ITransactionForm>;
   categories: ICategory[] = [];
   categoriesSubscription: Subscription = new Subscription();

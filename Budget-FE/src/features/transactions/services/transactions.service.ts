@@ -77,17 +77,4 @@ export class TransactionsService {
       return acc;
     }, []);
   }
-
-  // getAmountForType(
-  //   categoryType: TransactionType,
-  //   transactionAmount: number,
-  //   currentAmount: number
-  // ): number {
-  //   if (categoryType === TransactionType.Income) {
-  //     currentAmount += transactionAmount;
-  //   }
-  //   if (categoryType === TransactionType.Expense) {
-  //     acc[existingGroupIndex].expense += transaction.amount;
-  //   }
-  // }
 }

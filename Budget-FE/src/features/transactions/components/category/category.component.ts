@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import { ICategory, TransactionType } from '../../models';
+import { ICategory, TransactionTypeIcon } from '../../models';
+import { CategoryFormComponent } from '../category-form/category-form.component';
 
 @Component({
   selector: 'budget-category',
@@ -9,12 +11,19 @@ import { ICategory, TransactionType } from '../../models';
 })
 export class CategoryComponent {
   @Input() set category(category: ICategory) {
-    this.fontIcon =
-      category.type === TransactionType.Expense
-        ? 'arrow_upward'
-        : 'arrow_downward';
+    this.fontIcon = this.fontIcon =
+      TransactionTypeIcon[category.type as keyof typeof TransactionTypeIcon];
     this._category = category;
   }
   _category!: ICategory;
   fontIcon: string = '';
+
+  constructor(private bottomSheet: MatBottomSheet) {}
+
+  onCategory() {
+    this.bottomSheet.open(CategoryFormComponent, {
+      panelClass: 'bottom-sheet',
+      data: this._category,
+    });
+  }
 }
