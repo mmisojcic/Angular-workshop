@@ -38,4 +38,25 @@ export class CategoriesService {
         },
       });
   }
+
+  update(category: ICategory) {
+    this.http
+      .put<ICategory>(
+        `${environment.serverUrl}/${this.endpoint}/Update`,
+        category
+      )
+      .subscribe({
+        next: (res) => {
+          this.getAll();
+        },
+      });
+  }
+
+  processFormRequest(category: ICategory) {
+    if (category.id) {
+      this.update(category);
+    } else {
+      this.add(category);
+    }
+  }
 }

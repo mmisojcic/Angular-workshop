@@ -1,10 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 import { Subscription } from 'rxjs';
 import { createMask } from '@ngneat/input-mask';
 
-import { ICategory, ITransactionForm, TransactionTypeIcon } from '../../models';
+import {
+  ICategory,
+  ITransaction,
+  ITransactionForm,
+  TransactionTypeIcon,
+} from '../../models';
 import { TransactionsComponent } from '../transactions/transactions.component';
 import { TransactionsService } from '../../services/transactions.service';
 import { CategoriesService } from '../../services/categories.service';
@@ -26,17 +34,29 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private bottomSheetRef: MatBottomSheetRef<TransactionsComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public transactionForUpdate: ITransaction,
     private transactionsService: TransactionsService,
     private categoriesService: CategoriesService
   ) {}
 
   ngOnInit(): void {
     this.transactionForm = this.formBuilder.group({
-      categoryId: ['', [Validators.required]],
+      categoryId: [1, [Validators.required]],
       date: [new Date(), [Validators.required]],
       amount: ['', [Validators.required]],
       note: [''],
     });
+
+    if (this.transactionForUpdate) {
+      const { categoryId, date, amount, note } = this.transactionForUpdate;
+      console.log(this.transactionForUpdate);
+      this.transactionForm.setValue({
+        categoryId: categoryId,
+        date: new Date(date),
+        amount: amount.toString(),
+        note,
+      });
+    }
 
     this.categoriesSubscription =
       this.categoriesService.categoriesSubject.subscribe({
@@ -59,8 +79,9 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     if (this.transactionForm.valid) {
       const { categoryId, date, amount, note } = this.transactionForm.value;
 
-      this.transactionsService.add({
-        categoryId: parseInt(categoryId as string),
+      this.transactionsService.processFormRequest({
+        id: this.transactionForUpdate?.id,
+        categoryId: categoryId as number,
         date: transformDateToDataBaseDateFormat(date as Date),
         amount: parseFloat(amount as string),
         note: note as string,

@@ -39,13 +39,13 @@ export class CategoryFormComponent implements OnInit {
     });
 
     if (this.categoryForUpdate) {
-      const matches = this.categoryForUpdate.color
-        .match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+      const [, red, green, blue] = this.categoryForUpdate.color
+        .match(/rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/)
         ?.map((match) => parseInt(match))!;
 
       this.categoryForm.setValue({
         type: this.categoryForUpdate.type as string,
-        color: new Color(matches[0], matches[1], matches[2]),
+        color: new Color(red, green, blue),
         name: this.categoryForUpdate.name,
       });
     }
@@ -62,7 +62,8 @@ export class CategoryFormComponent implements OnInit {
     if (this.categoryForm.valid) {
       const { type, color, name } = this.categoryForm.value;
 
-      this.categoriesService.add({
+      this.categoriesService.processFormRequest({
+        id: this.categoryForUpdate?.id,
         type: type as TransactionType,
         color: `${color?.toRgbString()} `,
         name: name as string,

@@ -31,7 +31,7 @@ export interface ICategory {
 }
 
 export interface ITransactionForm {
-  categoryId: FormControl<string | null>;
+  categoryId: FormControl<number | null>;
   date: FormControl<Date | null>;
   amount: FormControl<string | null>;
   note: FormControl<string | null>;

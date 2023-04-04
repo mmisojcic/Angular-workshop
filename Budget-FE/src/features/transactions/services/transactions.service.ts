@@ -43,6 +43,27 @@ export class TransactionsService {
       });
   }
 
+  update(transaction: ITransaction) {
+    this.http
+      .put<ITransaction>(
+        `${environment.serverUrl}/${this.endpoint}/Update`,
+        transaction
+      )
+      .subscribe({
+        next: (res) => {
+          this.getAll();
+        },
+      });
+  }
+
+  processFormRequest(transaction: ITransaction) {
+    if (transaction.id) {
+      this.update(transaction);
+    } else {
+      this.add(transaction);
+    }
+  }
+
   mapTransactionsToGroups(transactions: ITransaction[]): ITransactionsGroup[] {
     return transactions.reduce((acc: ITransactionsGroup[], transaction) => {
       const category = this.categoriesService.categories.find(

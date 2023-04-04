@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { ITransaction, TransactionTypeIcon } from '../../models';
+import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 
 @Component({
   selector: 'budget-transaction',
@@ -14,8 +16,16 @@ export class TransactionComponent {
         transaction.category?.type as keyof typeof TransactionTypeIcon
       ];
     this._transaction = transaction;
-    console.log(transaction);
   }
   fontIcon: string = '';
   _transaction!: ITransaction;
+
+  constructor(private bottomSheet: MatBottomSheet) {}
+
+  onTransaction() {
+    this.bottomSheet.open(TransactionFormComponent, {
+      panelClass: 'bottom-sheet',
+      data: this._transaction,
+    });
+  }
 }

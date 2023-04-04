@@ -1,4 +1,4 @@
-<div class="transaction" matRipple>
+<div class="transaction" matRipple (click)="onTransaction()">
   <div
     class="transaction__type"
     [ngStyle]="{ 'background-color': _transaction?.category?.color }"
