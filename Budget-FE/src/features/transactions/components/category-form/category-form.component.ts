@@ -39,17 +39,15 @@ export class CategoryFormComponent implements OnInit {
     });
 
     if (this.categoryForUpdate) {
-      const rgba = this.categoryForUpdate.color.match(
-        /rgba\((\d+),(\d+),(\d+),(\d+)\)/
-      );
+      const matches = this.categoryForUpdate.color
+        .match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+        ?.map((match) => parseInt(match))!;
 
-      console.log(rgba);
-
-      // this.categoryForm.setValue({
-      //   type: this.categoryForUpdate.type as string,
-      //   color: new Color(rgba[1], rgba[2], rgba[3], rgba[4]),
-      //   name: this.categoryForUpdate.name,
-      // });
+      this.categoryForm.setValue({
+        type: this.categoryForUpdate.type as string,
+        color: new Color(matches[0], matches[1], matches[2]),
+        name: this.categoryForUpdate.name,
+      });
     }
 
     this.transactionTypes = Object.values(TransactionType).map((type) => ({
@@ -66,7 +64,7 @@ export class CategoryFormComponent implements OnInit {
 
       this.categoriesService.add({
         type: type as TransactionType,
-        color: color?.toRgba() as string,
+        color: `${color?.toRgbString()} `,
         name: name as string,
       });
       this.bottomSheetRef.dismiss();
