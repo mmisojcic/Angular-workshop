@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { createMask } from '@ngneat/input-mask';
 
 import { ISettings, ISettingsFrom } from 'src/main/models';
 import { HomeComponent } from '../home/home.component';
 import { SettingsService } from 'src/main/services/settings.service';
-import { createMask } from '@ngneat/input-mask';
+import { budgetMaskConfig } from 'src/shared/constants';
 
 @Component({
   selector: 'budget-settings',
@@ -14,21 +15,12 @@ import { createMask } from '@ngneat/input-mask';
 })
 export class SettingsComponent implements OnInit {
   settingsForm!: FormGroup<ISettingsFrom>;
-  currencyInputMask = createMask({
-    alias: 'numeric',
-    allowMinus: false,
-    groupSeparator: '.',
-    numericInput: true,
-    radixPoint: ',',
-    digits: 2,
-    prefix: 'RSD ',
-    unmaskAsNumber: true,
-    autoUnmask: true,
-  });
+  budgetInputMask = createMask(budgetMaskConfig);
   dayInputMask = createMask({
     alias: 'numeric',
     allowMinus: false,
-    min: 0,
+    rightAlign: false,
+    min: 1,
     max: 28,
     unmaskAsNumber: true,
     autoUnmask: true,

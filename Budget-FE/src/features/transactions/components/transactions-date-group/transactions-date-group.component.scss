@@ -1,0 +1,36 @@
+.transactions-date-group {
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+
+    &__text {
+      display: inline-flex;
+      font-size: 13px;
+
+      &__amount {
+        display: flex;
+        align-items: center;
+        margin-left: 1rem;
+
+        .mat-icon {
+          font-size: 16px;
+          width: fit-content;
+          height: fit-content;
+        }
+
+        &--income {
+          color: green;
+        }
+
+        &--expense {
+          color: red;
+        }
+      }
+    }
+  }
+}

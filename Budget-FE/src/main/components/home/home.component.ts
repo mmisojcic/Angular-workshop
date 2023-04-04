@@ -8,6 +8,7 @@ import { SettingsComponent } from '../settings/settings.component';
 import { JwtTokenService } from 'src/core/services/jwt-token.service';
 import { SettingsService } from 'src/main/services/settings.service';
 import { CategoriesService } from 'src/features/transactions/services/categories.service';
+import { TransactionsService } from 'src/features/transactions/services/transactions.service';
 
 @Component({
   selector: 'budget-home',
@@ -26,7 +27,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private transactionsService: TransactionsService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,7 @@ export class HomeComponent implements OnInit {
     this.settingsService.get();
     this.activeLink = this.activatedRoute.firstChild?.routeConfig?.path;
     this.categoriesService.getAll();
+    this.transactionsService.getAll();
   }
 
   onLogout() {

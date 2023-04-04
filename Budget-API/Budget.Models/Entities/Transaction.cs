@@ -12,8 +12,7 @@ namespace Budget.Models.Entities
     public class Transaction
     {
         [Key]
-        public int Id { get; set; }
-        public string Type { get; set; } 
+        public int Id { get; set; } 
         public int CategoryId { get; set; }
         [JsonIgnore]
         public virtual Category Category { get; set; }

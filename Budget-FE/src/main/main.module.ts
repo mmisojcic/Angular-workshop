@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 import { CoreModule } from '../core/core.module';
 import { MainRoutingModule } from './main-routing.module';
@@ -15,7 +16,6 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AuthorizationInterceptor } from 'src/core/interceptors/authorization.interceptor';
-import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
   declarations: [

@@ -1,1 +1,16 @@
-<p>transactions works!</p>
+<div class="home-route-full-size d-flex flex-column align-items-center">
+  <button mat-stroked-button class="button-add" (click)="onNewTransaction()">
+    <mat-icon fontIcon="add"></mat-icon>
+    New Transaction
+  </button>
+  <div class="transactions__list">
+    <div
+      class="transactions__list__item"
+      *ngFor="let transactionsGroup of transactionsGroups"
+    >
+      <budget-transactions-date-group
+        [transactionsGroup]="transactionsGroup"
+      ></budget-transactions-date-group>
+    </div>
+  </div>
+</div>

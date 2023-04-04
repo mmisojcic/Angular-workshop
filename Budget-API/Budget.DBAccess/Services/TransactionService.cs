@@ -22,8 +22,7 @@ namespace Budget.DBAccess.Services
 
         public async Task<Transaction> Add(Transaction transactionDTO)
         {
-            var transaction = new Transaction(); 
-            transaction.Type = transactionDTO.Type;
+            var transaction = new Transaction();  
             transaction.Amount = transactionDTO.Amount;
             transaction.CategoryId = transactionDTO.CategoryId;
             transaction.Date = transactionDTO.Date;

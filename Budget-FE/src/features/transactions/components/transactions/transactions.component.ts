@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription, map } from 'rxjs';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import { SettingsService } from 'src/main/services/settings.service';
+import { ITransactionsGroup } from '../../models';
+import { TransactionsService } from '../../services/transactions.service';
+import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 
 @Component({
   selector: 'budget-transactions',
@@ -8,7 +12,30 @@ import { SettingsService } from 'src/main/services/settings.service';
   styleUrls: ['./transactions.component.scss'],
 })
 export class TransactionsComponent implements OnInit {
-  constructor(private settingsService: SettingsService) {}
+  transactionsGroups: ITransactionsGroup[] = [];
+  transactionsGroupsSubscription: Subscription = new Subscription();
 
-  ngOnInit(): void {}
+  constructor(
+    private bottomSheet: MatBottomSheet,
+    private transactionsService: TransactionsService
+  ) {}
+
+  ngOnInit(): void {
+    this.transactionsGroupsSubscription =
+      this.transactionsService.transactionsGroupsSubject.subscribe({
+        next: (res) => {
+          this.transactionsGroups = res;
+        },
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.transactionsGroupsSubscription.unsubscribe();
+  }
+
+  onNewTransaction() {
+    this.bottomSheet.open(TransactionFormComponent, {
+      panelClass: 'bottom-sheet',
+    });
+  }
 }

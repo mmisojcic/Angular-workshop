@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Budget.DBAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230402121411_decimalBudget")]
-    partial class decimalBudget
+    [Migration("20230403122040_removeTypeTransaction")]
+    partial class removeTypeTransaction
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,9 +93,6 @@ namespace Budget.DBAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")

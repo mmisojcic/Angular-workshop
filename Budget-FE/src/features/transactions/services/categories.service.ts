@@ -10,11 +10,12 @@ import { ICategory } from '../models';
 })
 export class CategoriesService {
   endpoint: string = 'api/Category';
+  categories: ICategory[] = [];
   categoriesSubject: ReplaySubject<ICategory[]> = new ReplaySubject();
 
   constructor(private http: HttpClient) {}
 
-  save(category: ICategory) {
+  add(category: ICategory) {
     this.http
       .post<ICategory>(
         `${environment.serverUrl}/${this.endpoint}/Add`,
@@ -33,6 +34,7 @@ export class CategoriesService {
       .subscribe({
         next: (res) => {
           this.categoriesSubject.next(res);
+          this.categories = res;
         },
       });
   }

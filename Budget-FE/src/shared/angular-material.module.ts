@@ -12,6 +12,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRippleModule } from '@angular/material/core';
 
 const materialComponents = [
   MatButtonModule,
@@ -27,6 +29,8 @@ const materialComponents = [
   MatDialogModule,
   MatBottomSheetModule,
   MatSelectModule,
+  MatDatepickerModule,
+  MatRippleModule,
 ];
 
 @NgModule({

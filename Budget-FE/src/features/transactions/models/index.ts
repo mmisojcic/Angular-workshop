@@ -24,3 +24,27 @@ export interface ICategory {
   color: string;
   name: string;
 }
+
+export interface ITransactionForm {
+  categoryId: FormControl<string | null>;
+  date: FormControl<Date | null>;
+  amount: FormControl<string | null>;
+  note: FormControl<string | null>;
+}
+
+export interface ITransaction {
+  id?: number;
+  type?: TransactionType;
+  category?: Partial<ICategory>;
+  categoryId: number;
+  date: string;
+  amount: number;
+  note: string;
+}
+
+export interface ITransactionsGroup {
+  date: string;
+  income: number;
+  expense: number;
+  transactions: ITransaction[];
+}

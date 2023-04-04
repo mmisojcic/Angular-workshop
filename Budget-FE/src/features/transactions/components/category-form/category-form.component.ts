@@ -45,7 +45,7 @@ export class CategoryFormComponent implements OnInit {
     if (this.categoryForm.valid) {
       const { type, color, name } = this.categoryForm.value;
 
-      this.categoriesService.save({
+      this.categoriesService.add({
         type: type as TransactionType,
         color: color?.toRgba() as string,
         name: name as string,

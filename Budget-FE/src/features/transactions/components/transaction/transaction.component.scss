@@ -1,13 +1,11 @@
-.category {
+.transaction {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0.25rem 0.5rem;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(#3f51b5, 0.07);
+  width: 400px;
   height: 50px;
-  width: 250px;
 
   &__type {
     position: relative;
@@ -28,6 +26,29 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+
+    &__labels {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      &__note {
+        font-size: 12px;
+      }
+    }
+
+    &__amount {
+      font-size: 15px;
+      font-weight: 600;
     }
   }
 }

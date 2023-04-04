@@ -9,7 +9,7 @@
       <mat-label>Budget amount</mat-label>
       <input
         matInput
-        [inputMask]="currencyInputMask"
+        [inputMask]="budgetInputMask"
         formControlName="budgetAmount"
       />
       <mat-error *ngIf="settingsForm.controls.budgetAmount.hasError('required')"
