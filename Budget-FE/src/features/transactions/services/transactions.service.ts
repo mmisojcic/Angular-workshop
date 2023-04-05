@@ -11,6 +11,7 @@ import { CategoriesService } from './categories.service';
 })
 export class TransactionsService {
   endpoint: string = 'api/Transaction';
+  transactionsGroups: ITransactionsGroup[] = [];
   transactionsGroupsSubject: ReplaySubject<ITransactionsGroup[]> =
     new ReplaySubject();
 
@@ -39,6 +40,7 @@ export class TransactionsService {
       .subscribe({
         next: (res) => {
           this.transactionsGroupsSubject.next(res);
+          this.transactionsGroups = res;
         },
       });
   }
@@ -66,12 +68,11 @@ export class TransactionsService {
 
   mapTransactionsToGroups(transactions: ITransaction[]): ITransactionsGroup[] {
     return transactions.reduce((acc: ITransactionsGroup[], transaction) => {
+      const { categoryId, date, amount } = transaction;
       const category = this.categoriesService.categories.find(
-        (category) => category.id === transaction.categoryId
+        (category) => category.id === categoryId
       );
-      const existingGroupIndex = acc.findIndex(
-        (group) => group.date === transaction.date
-      );
+      const existingGroupIndex = acc.findIndex((group) => group.date === date);
 
       if (existingGroupIndex > -1) {
         acc[existingGroupIndex].transactions.push({
@@ -80,18 +81,16 @@ export class TransactionsService {
         });
 
         if (category?.type === TransactionType.Income) {
-          acc[existingGroupIndex].income += transaction.amount;
+          acc[existingGroupIndex].income += amount;
         }
         if (category?.type === TransactionType.Expense) {
-          acc[existingGroupIndex].expense += transaction.amount;
+          acc[existingGroupIndex].expense += amount;
         }
       } else {
         acc.push({
-          date: transaction.date,
-          income:
-            category?.type === TransactionType.Income ? transaction.amount : 0,
-          expense:
-            category?.type === TransactionType.Expense ? transaction.amount : 0,
+          date,
+          income: category?.type === TransactionType.Income ? amount : 0,
+          expense: category?.type === TransactionType.Expense ? amount : 0,
           transactions: [{ ...transaction, category }],
         });
       }

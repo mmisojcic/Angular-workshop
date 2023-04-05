@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { TransactionsRoutingModule } from './transactions-routing.module';
+import { SharedModule } from 'src/shared/shared.module';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { CategoryComponent } from './components/category/category.component';
@@ -20,7 +21,7 @@ import { AngularMaterialModule } from 'src/shared/angular-material.module';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { TransactionsDateGroupComponent } from './components/transactions-date-group/transactions-date-group.component';
-import { SharedModule } from 'src/shared/shared.module';
+import { BalanceComponent } from './components/balance/balance.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SharedModule } from 'src/shared/shared.module';
     TransactionFormComponent,
     TransactionComponent,
     TransactionsDateGroupComponent,
+    BalanceComponent,
   ],
   imports: [
     CommonModule,

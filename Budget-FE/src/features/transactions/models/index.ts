@@ -33,7 +33,7 @@ export interface ICategory {
 export interface ITransactionForm {
   categoryId: FormControl<number | null>;
   date: FormControl<Date | null>;
-  amount: FormControl<string | null>;
+  amount: FormControl<number | null>;
   note: FormControl<string | null>;
 }
 
@@ -52,4 +52,13 @@ export interface ITransactionsGroup {
   income: number;
   expense: number;
   transactions: ITransaction[];
+}
+
+export interface IBalance {
+  income: number;
+  expense: number;
+  amount: number;
+  plannedBudget: number;
+  remainingBudget: number;
+  spentBudgetPercentage: number;
 }

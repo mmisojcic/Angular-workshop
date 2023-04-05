@@ -41,19 +41,19 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.transactionForm = this.formBuilder.group({
-      categoryId: [1, [Validators.required]],
+      categoryId: [null as number | null, [Validators.required]],
       date: [new Date(), [Validators.required]],
-      amount: ['', [Validators.required]],
+      amount: [null as number | null, [Validators.required]],
       note: [''],
     });
 
     if (this.transactionForUpdate) {
       const { categoryId, date, amount, note } = this.transactionForUpdate;
-      console.log(this.transactionForUpdate);
+
       this.transactionForm.setValue({
-        categoryId: categoryId,
+        categoryId,
         date: new Date(date),
-        amount: amount.toString(),
+        amount,
         note,
       });
     }
@@ -83,7 +83,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         id: this.transactionForUpdate?.id,
         categoryId: categoryId as number,
         date: transformDateToDataBaseDateFormat(date as Date),
-        amount: parseFloat(amount as string),
+        amount: amount as number,
         note: note as string,
       });
       this.bottomSheetRef.dismiss();

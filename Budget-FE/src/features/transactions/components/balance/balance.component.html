@@ -1,0 +1,44 @@
+<div class="balance">
+  <div class="balance__overview">
+    <div>
+      <h4>Income: {{ balance?.income | budgetAmount : "Income" }}</h4>
+      <h4>Expense: {{ balance?.expense | budgetAmount : "Expense" }}</h4>
+    </div>
+    <h2>Balance: {{ balance?.amount | budgetAmount }}</h2>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="balance__budget">
+    <span class="balance__budget__planned"
+      >Planned: {{ balance?.plannedBudget | budgetAmount }}</span
+    >
+    <mat-progress-bar
+      mode="determinate"
+      [value]="balance?.spentBudgetPercentage"
+    ></mat-progress-bar>
+    <span class="balance__budget__remaining"
+      >Remaining: {{ balance?.remainingBudget | budgetAmount }}</span
+    >
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a
+    mat-tab-link
+    [active]="activeLink === links.Categories"
+    (click)="onTabChange(links.Categories)"
+    ><mat-icon fontIcon="my_library_books"></mat-icon>
+    {{ links.Categories }}
+  </a>
+  <a
+    mat-tab-link
+    [active]="activeLink === links.Transactions"
+    (click)="onTabChange(links.Transactions)"
+    ><mat-icon fontIcon="import_export"></mat-icon>
+    {{ links.Transactions }}
+  </a>
+</nav>
+<mat-divider></mat-divider>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>

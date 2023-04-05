@@ -1,0 +1,21 @@
+.balance {
+  padding: 1rem 6rem;
+  background-color: rgba(63, 81, 181, 0.1);
+
+  &__overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__budget {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    &__remaining {
+      text-align: right;
+    }
+  }
+}
