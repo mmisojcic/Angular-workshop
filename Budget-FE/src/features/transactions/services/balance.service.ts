@@ -1,36 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 
-import { IBalance, ITransactionsGroup } from '../models';
-import { ISettings } from 'src/main/models';
+import { DataService } from 'src/shared/services/data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BalanceService {
-  balance!: IBalance;
-  balanceSubject: Subject<IBalance> = new Subject();
+  constructor(private dataService: DataService) {}
 
-  constructor() {}
-
-  calculateBalance(
-    transactionsGroups: ITransactionsGroup[],
-    settings: ISettings
-  ) {
+  calculateBalance() {
     let income = 0;
     let expense = 0;
 
-    transactionsGroups.forEach((transactionsGroup) => {
+    this.dataService.transactionsGroups.forEach((transactionsGroup) => {
       income += transactionsGroup.income;
       expense += transactionsGroup.expense;
     });
 
     const amount = income - expense;
-    const plannedBudget = settings.budgetAmount;
+    const plannedBudget = this.dataService.settings.budgetAmount;
     const remainingBudget = plannedBudget - expense;
     const spentBudgetPercentage = (expense / plannedBudget) * 100;
+    const [startDate, endDate] = this.setDateRange(
+      this.dataService.settings.day
+    );
 
-    this.balanceSubject.next({
+    this.dataService.balanceSubject.next({
+      startDate,
+      endDate,
       income,
       expense,
       amount,
@@ -38,5 +35,24 @@ export class BalanceService {
       remainingBudget,
       spentBudgetPercentage,
     });
+  }
+
+  setDateRange(day: number): Date[] {
+    const today = new Date();
+    let startMonth;
+    let endMonth;
+
+    if (today.getDay() <= day) {
+      startMonth = today.getMonth() - 1;
+      endMonth = today.getMonth();
+    } else {
+      startMonth = today.getMonth();
+      endMonth = today.getMonth() + 1;
+    }
+
+    var startDate = new Date(today.getFullYear(), startMonth, day);
+    var endDate = new Date(today.getFullYear(), endMonth, day - 1);
+
+    return [startDate, endDate];
   }
 }

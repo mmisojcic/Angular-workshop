@@ -40,6 +40,14 @@ namespace BudgetApi.Controllers
             return Ok(await _transactionService.GetAll());
         }
 
+        [HttpGet]
+        [Route("GetAll/{day}")]
+        [Authorize]
+        public async Task<IActionResult> GetAllInDateRangeAsync(int day)
+        {
+            return Ok(await _transactionService.GetAllInDateRange(day));
+        }
+
         [HttpPut]
         [Authorize]
         [Route("Update")]

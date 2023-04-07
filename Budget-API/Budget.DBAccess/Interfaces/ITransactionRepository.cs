@@ -11,6 +11,7 @@ namespace Budget.DBAccess.Interfaces
     {
 
         public Task<List<Transaction>> GetAll(string userId);
+        public Task<List<Transaction>> GetAllInDateRange(string userId, DateTime startDate, DateTime endDate);
         public Task<Transaction> Get(int id);
         public Task Add(Transaction transaction);
         public void Update(Transaction transaction);

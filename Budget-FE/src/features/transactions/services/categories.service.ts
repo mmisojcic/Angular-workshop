@@ -1,19 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
 
 import { environment } from 'environments/environment';
 import { ICategory } from '../models';
+import { DataService } from 'src/shared/services/data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesService {
   endpoint: string = 'api/Category';
-  categories: ICategory[] = [];
-  categoriesSubject: ReplaySubject<ICategory[]> = new ReplaySubject();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dataService: DataService) {}
 
   add(category: ICategory) {
     this.http
@@ -29,14 +27,9 @@ export class CategoriesService {
   }
 
   getAll() {
-    this.http
-      .get<ICategory[]>(`${environment.serverUrl}/${this.endpoint}/GetAll`)
-      .subscribe({
-        next: (res) => {
-          this.categoriesSubject.next(res);
-          this.categories = res;
-        },
-      });
+    return this.http.get<ICategory[]>(
+      `${environment.serverUrl}/${this.endpoint}/GetAll`
+    );
   }
 
   update(category: ICategory) {

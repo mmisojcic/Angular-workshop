@@ -5,8 +5,6 @@ import { AuthenticationService } from 'src/core/services/authentication.service'
 import { SettingsComponent } from '../settings/settings.component';
 import { JwtTokenService } from 'src/core/services/jwt-token.service';
 import { SettingsService } from 'src/main/services/settings.service';
-import { CategoriesService } from 'src/features/transactions/services/categories.service';
-import { TransactionsService } from 'src/features/transactions/services/transactions.service';
 
 @Component({
   selector: 'budget-home',
@@ -20,16 +18,12 @@ export class HomeComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private settingsService: SettingsService,
     private jwtTokenService: JwtTokenService,
-    private dialog: MatDialog,
-    private categoriesService: CategoriesService,
-    private transactionsService: TransactionsService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.username = this.jwtTokenService.getUsername();
     this.settingsService.get();
-    this.categoriesService.getAll();
-    this.transactionsService.getAll();
   }
 
   onLogout() {

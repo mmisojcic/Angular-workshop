@@ -7,6 +7,8 @@ import { ISettings, ISettingsFrom } from 'src/main/models';
 import { HomeComponent } from '../home/home.component';
 import { SettingsService } from 'src/main/services/settings.service';
 import { budgetMaskConfig } from 'src/shared/constants';
+import { DataService } from 'src/shared/services/data.service';
+import { TransactionsService } from 'src/features/transactions/services/transactions.service';
 
 @Component({
   selector: 'budget-settings',
@@ -30,22 +32,31 @@ export class SettingsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<HomeComponent>,
-    private settingsService: SettingsService
+    private dataService: DataService,
+    private settingsService: SettingsService,
+    private transactionService: TransactionsService
   ) {}
 
   ngOnInit(): void {
     this.settingsForm = this.formBuilder.group({
       budgetAmount: [
-        this.settingsService.settings.budgetAmount,
+        this.dataService.settings.budgetAmount,
         [Validators.required],
       ],
-      day: [this.settingsService.settings.day, [Validators.required]],
+      day: [this.dataService.settings.day, [Validators.required]],
     });
   }
 
   onSubmit(): void {
     if (this.settingsForm.valid) {
-      this.settingsService.update(this.settingsForm.value as ISettings);
+      this.settingsService
+        .update(this.settingsForm.value as ISettings)
+        .subscribe({
+          next: (res) => {
+            this.dataService.settings = res;
+            this.transactionService.getAll(res.day);
+          },
+        });
       this.dialogRef.close();
     }
   }

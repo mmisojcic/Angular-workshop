@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 import { environment } from 'environments/environment';
 import { ITransaction, ITransactionsGroup, TransactionType } from '../models';
-import { CategoriesService } from './categories.service';
+import { DataService } from 'src/shared/services/data.service';
+import { BalanceService } from './balance.service';
+import { sortArrayByField } from 'src/shared/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionsService {
   endpoint: string = 'api/Transaction';
-  transactionsGroups: ITransactionsGroup[] = [];
-  transactionsGroupsSubject: ReplaySubject<ITransactionsGroup[]> =
-    new ReplaySubject();
 
   constructor(
     private http: HttpClient,
-    private categoriesService: CategoriesService
+    private balanceService: BalanceService,
+    private dataService: DataService
   ) {}
 
   add(category: ITransaction) {
@@ -28,19 +28,28 @@ export class TransactionsService {
       )
       .subscribe({
         next: (res) => {
-          this.getAll();
+          this.getAll(this.dataService.settings.day);
         },
       });
   }
 
-  getAll() {
+  getAll(day?: number) {
+    const pathParam: string = day ? `/${day}` : '';
+
     this.http
-      .get<ITransaction[]>(`${environment.serverUrl}/${this.endpoint}/GetAll`)
-      .pipe(map((res) => this.mapTransactionsToGroups(res)))
+      .get<ITransaction[]>(
+        `${environment.serverUrl}/${this.endpoint}/GetAll${pathParam}`
+      )
+      .pipe<ITransactionsGroup[]>(
+        map((res) =>
+          sortArrayByField(this.mapTransactionsToGroups(res), 'date')
+        )
+      )
       .subscribe({
-        next: (res) => {
-          this.transactionsGroupsSubject.next(res);
-          this.transactionsGroups = res;
+        next: (data) => {
+          this.dataService.transactionsGroups = data;
+          this.dataService.transactionsGroupsSubject.next(data);
+          this.balanceService.calculateBalance();
         },
       });
   }
@@ -53,7 +62,7 @@ export class TransactionsService {
       )
       .subscribe({
         next: (res) => {
-          this.getAll();
+          this.getAll(this.dataService.settings.day);
         },
       });
   }
@@ -69,7 +78,7 @@ export class TransactionsService {
   mapTransactionsToGroups(transactions: ITransaction[]): ITransactionsGroup[] {
     return transactions.reduce((acc: ITransactionsGroup[], transaction) => {
       const { categoryId, date, amount } = transaction;
-      const category = this.categoriesService.categories.find(
+      const category = this.dataService.categories.find(
         (category) => category.id === categoryId
       );
       const existingGroupIndex = acc.findIndex((group) => group.date === date);

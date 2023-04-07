@@ -1,8 +1,10 @@
 <div class="home-route-full-size d-flex flex-column align-items-center">
-  <button mat-stroked-button class="button-add" (click)="onNewCategory()">
-    <mat-icon fontIcon="add"></mat-icon>
-    New Category
-  </button>
+  <div class="button-add">
+    <button mat-stroked-button (click)="onNewCategory()">
+      <mat-icon fontIcon="add"></mat-icon>
+      New Category
+    </button>
+  </div>
   <div class="categories__list">
     <div class="categories__list__item" *ngFor="let category of categories">
       <budget-category [category]="category"></budget-category>

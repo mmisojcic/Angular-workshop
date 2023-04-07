@@ -53,5 +53,10 @@ namespace Budget.DBAccess.Repositories
         {
             return await _context.Transaction.AnyAsync(t => ids.Contains(t.Id));
         }
+
+        public async  Task<List<Transaction>> GetAllInDateRange(string userId, DateTime startDate, DateTime endDate)
+        {
+            return await _context.Transaction.Where(t => t.User.Id == userId && t.Date >= startDate && t.Date <= endDate ).ToListAsync();
+        }
     }
 }

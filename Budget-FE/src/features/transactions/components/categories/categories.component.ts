@@ -3,8 +3,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Subscription } from 'rxjs';
 
 import { CategoryFormComponent } from '../category-form/category-form.component';
-import { CategoriesService } from '../../services/categories.service';
 import { ICategory } from '../../models';
+import { DataService } from 'src/shared/services/data.service';
 
 @Component({
   selector: 'budget-categories',
@@ -17,16 +17,16 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   constructor(
     private bottomSheet: MatBottomSheet,
-    private categoriesService: CategoriesService
+
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
-    this.categoriesSubscription =
-      this.categoriesService.categoriesSubject.subscribe({
-        next: (res) => {
-          this.categories = res;
-        },
-      });
+    this.categoriesSubscription = this.dataService.categoriesSubject.subscribe({
+      next: (res) => {
+        this.categories = res;
+      },
+    });
   }
 
   ngOnDestroy(): void {

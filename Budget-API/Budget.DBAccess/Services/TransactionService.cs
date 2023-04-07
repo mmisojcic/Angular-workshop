@@ -39,7 +39,7 @@ namespace Budget.DBAccess.Services
         }
 
         public async Task<List<Transaction>> GetAll()
-        {
+        { 
             return await _repository.GetAll(_userService.GetUserId());
         }
 
@@ -57,6 +57,29 @@ namespace Budget.DBAccess.Services
             _repository.Delete(ids);
             await _repository.Save();
             return true;
+        }
+
+        public async Task<List<Transaction>> GetAllInDateRange(int day)
+        {
+            var today = DateTime.Today;
+            int startMonth;
+            int endMonth;
+
+            if (today.Day <= day) 
+            {
+                startMonth = today.Month - 1;
+                endMonth = today.Month;
+            } 
+            else 
+            {
+                startMonth = today.Month;
+                endMonth = today.Month + 1;
+            }
+
+            var startDate = new DateTime(today.Year, startMonth, day);
+            var endDate = new DateTime(today.Year, endMonth, day - 1);
+
+            return await _repository.GetAllInDateRange(_userService.GetUserId(),startDate,endDate);
         }
     }
 }

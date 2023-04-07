@@ -16,7 +16,7 @@ namespace Budget.DBAccess.Repositories
 
         public async Task<Settings> Get(string userId)
         {
-           return await _context.Settings.Where(s=>s.User.Id == userId).FirstOrDefaultAsync();
+           return await _context.Settings.Where(s => s.User.Id == userId).FirstOrDefaultAsync();
         }
 
         async Task ISettingsRepository.Add(Settings  settings)
@@ -24,7 +24,6 @@ namespace Budget.DBAccess.Repositories
             await _context.Settings.AddAsync(settings);
         }
 
-       
 
         void ISettingsRepository.Update(Settings  item)
         {

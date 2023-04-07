@@ -1,10 +1,9 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_BOTTOM_SHEET_DATA,
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
-import { Subscription } from 'rxjs';
 import { createMask } from '@ngneat/input-mask';
 
 import {
@@ -15,20 +14,19 @@ import {
 } from '../../models';
 import { TransactionsComponent } from '../transactions/transactions.component';
 import { TransactionsService } from '../../services/transactions.service';
-import { CategoriesService } from '../../services/categories.service';
 import { budgetMaskConfig } from 'src/shared/constants';
 import { transformDateToDataBaseDateFormat } from 'src/shared/utils';
+import { DataService } from 'src/shared/services/data.service';
 
 @Component({
   selector: 'budget-transaction-form',
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss'],
 })
-export class TransactionFormComponent implements OnInit, OnDestroy {
+export class TransactionFormComponent implements OnInit {
   transactionTypeIcon = TransactionTypeIcon;
   transactionForm!: FormGroup<ITransactionForm>;
   categories: ICategory[] = [];
-  categoriesSubscription: Subscription = new Subscription();
   budgetInputMask = createMask(budgetMaskConfig);
 
   constructor(
@@ -36,7 +34,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     private bottomSheetRef: MatBottomSheetRef<TransactionsComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public transactionForUpdate: ITransaction,
     private transactionsService: TransactionsService,
-    private categoriesService: CategoriesService
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -58,16 +56,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.categoriesSubscription =
-      this.categoriesService.categoriesSubject.subscribe({
-        next: (res) => {
-          this.categories = res;
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.categoriesSubscription.unsubscribe();
+    this.categories = this.dataService.categories;
   }
 
   onCancel(event: MouseEvent): void {

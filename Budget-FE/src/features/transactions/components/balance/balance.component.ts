@@ -4,7 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { IBalance } from '../../models';
 import { TransactionsRoute } from 'src/shared/models';
-import { BalanceService } from '../../services/balance.service';
+import { DataService } from 'src/shared/services/data.service';
+import { TransactionsService } from '../../services/transactions.service';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'budget-balance',
@@ -20,13 +22,22 @@ export class BalanceComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private balanceService: BalanceService
+    private dataService: DataService,
+    private categoriesService: CategoriesService,
+    private transactionsService: TransactionsService
   ) {}
 
   ngOnInit(): void {
     this.activeLink = this.activatedRoute.firstChild?.routeConfig?.path;
+    this.categoriesService.getAll().subscribe({
+      next: (res) => {
+        this.dataService.categoriesSubject.next(res);
+        this.dataService.categories = res;
+        this.transactionsService.getAll(this.dataService.settings.day);
+      },
+    });
 
-    this.balanceSubscription = this.balanceService.balanceSubject.subscribe({
+    this.balanceSubscription = this.dataService.balanceSubject.subscribe({
       next: (res) => {
         this.balance = res;
       },

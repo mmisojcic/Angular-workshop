@@ -1,45 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { environment } from 'environments/environment';
 import { ISettings } from '../models';
-import { TransactionsService } from 'src/features/transactions/services/transactions.service';
-import { BalanceService } from 'src/features/transactions/services/balance.service';
+import { DataService } from 'src/shared/services/data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
   endpoint: string = 'api/Settings';
-  settings!: ISettings;
 
-  constructor(
-    private http: HttpClient,
-    private transactionsService: TransactionsService,
-    private balanceService: BalanceService
-  ) {}
+  constructor(private http: HttpClient, private dataService: DataService) {}
 
   get() {
     this.http
       .get<ISettings>(`${environment.serverUrl}/${this.endpoint}/Get`)
       .subscribe({
         next: (res) => {
-          this.settings = res;
+          this.dataService.settings = res;
         },
       });
   }
 
-  update(settings: ISettings) {
-    this.http
-      .put(`${environment.serverUrl}/${this.endpoint}/Update`, settings)
-      .subscribe({
-        next: (res) => {
-          this.settings = settings;
-          this.balanceService.calculateBalance(
-            this.transactionsService.transactionsGroups,
-            this.settings
-          );
-        },
-      });
+  update(settings: ISettings): Observable<ISettings> {
+    return this.http.put<ISettings>(
+      `${environment.serverUrl}/${this.endpoint}/Update`,
+      settings
+    );
   }
 }

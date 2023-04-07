@@ -1,22 +1,35 @@
 <div class="balance">
   <div class="balance__overview">
-    <div>
-      <h4>Income: {{ balance?.income | budgetAmount : "Income" }}</h4>
-      <h4>Expense: {{ balance?.expense | budgetAmount : "Expense" }}</h4>
+    <span class="balance__overview__date"
+      >Balance for:
+      <b
+        >{{ balance?.startDate | date : "d.M.yyyy." }} -
+        {{ balance?.endDate | date : "d.M.yyyy." }}</b
+      ></span
+    >
+    <div class="balance__overview__data">
+      <h5 class="balance__overview__data__income">
+        Income: <b>{{ balance?.income | budgetAmount : "Income" }}</b>
+      </h5>
+      <h5 class="balance__overview__data__expense">
+        Expense: <b>{{ balance?.expense | budgetAmount : "Expense" }}</b>
+      </h5>
     </div>
-    <h2>Balance: {{ balance?.amount | budgetAmount }}</h2>
+    <h2 class="balance__overview__data__balance">
+      <b>{{ balance?.amount | budgetAmount }}</b>
+    </h2>
   </div>
   <mat-divider></mat-divider>
   <div class="balance__budget">
     <span class="balance__budget__planned"
-      >Planned: {{ balance?.plannedBudget | budgetAmount }}</span
+      >Planned: <b>{{ balance?.plannedBudget | budgetAmount }}</b></span
     >
     <mat-progress-bar
       mode="determinate"
       [value]="balance?.spentBudgetPercentage"
     ></mat-progress-bar>
     <span class="balance__budget__remaining"
-      >Remaining: {{ balance?.remainingBudget | budgetAmount }}</span
+      >Remaining: <b>{{ balance?.remainingBudget | budgetAmount }}</b></span
     >
   </div>
 </div>

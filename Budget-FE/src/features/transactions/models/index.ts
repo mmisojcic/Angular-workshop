@@ -55,6 +55,8 @@ export interface ITransactionsGroup {
 }
 
 export interface IBalance {
+  startDate: Date;
+  endDate: Date;
   income: number;
   expense: number;
   amount: number;

@@ -1,8 +1,10 @@
 <div class="home-route-full-size d-flex flex-column align-items-center">
-  <button mat-stroked-button class="button-add" (click)="onNewTransaction()">
-    <mat-icon fontIcon="add"></mat-icon>
-    New Transaction
-  </button>
+  <div class="button-add">
+    <button mat-stroked-button (click)="onNewTransaction()">
+      <mat-icon fontIcon="add"></mat-icon>
+      New Transaction
+    </button>
+  </div>
   <div class="transactions__list">
     <div
       class="transactions__list__item"

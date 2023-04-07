@@ -3,10 +3,8 @@ import { Subscription } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { ITransactionsGroup } from '../../models';
-import { TransactionsService } from '../../services/transactions.service';
 import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
-import { BalanceService } from '../../services/balance.service';
-import { SettingsService } from 'src/main/services/settings.service';
+import { DataService } from 'src/shared/services/data.service';
 
 @Component({
   selector: 'budget-transactions',
@@ -19,20 +17,14 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private bottomSheet: MatBottomSheet,
-    private transactionsService: TransactionsService,
-    private balanceService: BalanceService,
-    private settingsService: SettingsService
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     this.transactionsGroupsSubscription =
-      this.transactionsService.transactionsGroupsSubject.subscribe({
+      this.dataService.transactionsGroupsSubject.subscribe({
         next: (res) => {
           this.transactionsGroups = res;
-          this.balanceService.calculateBalance(
-            res,
-            this.settingsService.settings
-          );
         },
       });
   }

@@ -26,7 +26,6 @@ namespace BudgetApi.Controllers
             this.userManager = userManager; 
             _settingsService = settingsService;
             _configuration = configuration;
-             
         }
 
         [HttpPost]
@@ -82,9 +81,10 @@ namespace BudgetApi.Controllers
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
-
+                 
+                
                 return Ok(new
-                {
+                { 
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo
                 });

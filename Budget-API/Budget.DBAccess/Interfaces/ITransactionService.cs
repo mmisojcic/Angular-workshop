@@ -11,6 +11,8 @@ namespace Budget.DBAccess.Interfaces
     {
         public Task<List<Transaction>> GetAll();
 
+        public Task<List<Transaction>> GetAllInDateRange(int day);
+
         public Task<Transaction> Get(int id);
 
         public Task<Transaction> Add(Transaction transactionDTO);

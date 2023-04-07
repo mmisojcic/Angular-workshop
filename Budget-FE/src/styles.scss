@@ -13,12 +13,20 @@ body {
 
 .home-route-full-size {
   width: 100%;
-  height: calc(100vh - 304px);
+  height: calc(100vh - 330px);
+  background-color: #fdfdfd;
 }
 
 .button-add {
   width: 11rem;
+  height: 2.5rem;
   margin: 1rem auto;
+  background-color: #ffffff;
+
+  button {
+    min-width: 11rem;
+    min-height: 2.5rem;
+  }
 }
 
 .bottom-sheet {
