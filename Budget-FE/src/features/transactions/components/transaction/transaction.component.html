@@ -9,11 +9,11 @@
     <div class="transaction__info__labels">
       <span>{{ _transaction?.category?.name }}</span>
       <span class="transaction__info__labels__note">{{
-        _transaction?.note
+        _transaction.note
       }}</span>
     </div>
     <span class="transaction__info__amount">{{
-      _transaction?.amount | budgetAmount : _transaction?.category?.type
+      _transaction.amount | budgetAmount : _transaction?.category?.type
     }}</span>
   </div>
 </div>
