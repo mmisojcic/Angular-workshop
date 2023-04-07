@@ -23,8 +23,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.categoriesSubscription = this.dataService.categoriesSubject.subscribe({
-      next: (res) => {
-        this.categories = res;
+      next: (data) => {
+        this.categories = data;
       },
     });
   }

@@ -21,7 +21,12 @@ export class CategoriesService {
       )
       .subscribe({
         next: (res) => {
-          this.getAll();
+          this.getAll().subscribe({
+            next: (res) => {
+              this.dataService.categoriesSubject.next(res);
+              this.dataService.categories = res;
+            },
+          });
         },
       });
   }
@@ -40,7 +45,12 @@ export class CategoriesService {
       )
       .subscribe({
         next: (res) => {
-          this.getAll();
+          this.getAll().subscribe({
+            next: (res) => {
+              this.dataService.categoriesSubject.next(res);
+              this.dataService.categories = res;
+            },
+          });
         },
       });
   }
