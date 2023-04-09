@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.settingsForm = this.formBuilder.group({
       budgetAmount: [
-        this.dataService.settings.budgetAmount,
+        this.dataService.settings.budgetAmount || null,
         [Validators.required],
       ],
       day: [this.dataService.settings.day, [Validators.required]],
