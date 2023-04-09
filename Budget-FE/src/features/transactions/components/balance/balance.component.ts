@@ -16,7 +16,7 @@ import { CategoriesService } from '../../services/categories.service';
 export class BalanceComponent implements OnInit, OnDestroy {
   links = TransactionsRoute;
   activeLink: string | undefined = '';
-  balance!: IBalance;
+  balance!: IBalance | undefined;
   balanceSubscription: Subscription = new Subscription();
 
   constructor(

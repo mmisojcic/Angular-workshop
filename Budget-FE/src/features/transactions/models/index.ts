@@ -40,7 +40,7 @@ export interface ITransactionForm {
 export interface ITransaction {
   id?: number;
   type?: TransactionType;
-  category?: ICategory | undefined;
+  category?: ICategory;
   categoryId: number;
   date: string;
   amount: number;
