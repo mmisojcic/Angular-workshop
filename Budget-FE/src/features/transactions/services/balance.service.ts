@@ -42,7 +42,7 @@ export class BalanceService {
     let startMonth;
     let endMonth;
 
-    if (today.getDay() <= day) {
+    if (today.getDate() <= day) {
       startMonth = today.getMonth() - 1;
       endMonth = today.getMonth();
     } else {
