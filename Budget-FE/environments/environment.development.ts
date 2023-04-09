@@ -1,4 +1,1 @@
-export const environment = {
-  production: false,
-  serverUrl: 'https://localhost:7170',
-};
+export const environment = {};

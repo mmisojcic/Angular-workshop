@@ -1,1 +1,1 @@
-export const environment = { production: true, serverUrl: '' };
+export const environment = {};
