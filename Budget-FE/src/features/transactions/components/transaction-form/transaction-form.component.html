@@ -1,0 +1,85 @@
+<div class="transaction-form">
+  <form
+    [formGroup]="transactionForm"
+    (ngSubmit)="onSubmit()"
+    class="w-100 d-flex flex-column justify-content-center"
+  >
+    <mat-form-field class="mb-3" appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          <div class="item">
+            <div
+              class="item__type"
+              [ngStyle]="{ 'background-color': category?.color }"
+            >
+              <mat-icon
+                [fontIcon]="transactionTypeIcon[category.type]"
+                class="item__type__icon"
+              ></mat-icon>
+            </div>
+            <span>{{ category?.name }}</span>
+          </div>
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="transactionForm.controls.categoryId.hasError('required')"
+        >This field is required.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="mb-3" appearance="fill">
+      <mat-label>Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="date"
+        readonly
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="transactionForm.controls.date.hasError('required')"
+        >This field is required.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="mb-3" appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input
+        matInput
+        [inputMask]="budgetInputMask"
+        formControlName="amount"
+        required
+      />
+      <mat-error *ngIf="transactionForm.controls.amount.hasError('required')"
+        >This field is required.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="mb-3" appearance="fill">
+      <mat-label>Note</mat-label>
+      <input matInput formControlName="note" />
+    </mat-form-field>
+    <div class="w-100 d-flex justify-content-around">
+      <button
+        mat-raised-button
+        type="button"
+        class="form-button"
+        (click)="onCancel($event)"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="form-button"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
